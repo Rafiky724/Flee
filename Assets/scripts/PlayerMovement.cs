@@ -14,20 +14,29 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 8f;
     public bool canJump;
 
-    public bool aux;
+    public float gravity = 2;
+
+
+    //NEW
+    public bool isJumping;
 
     // Start is called before the first frame update
     void Start()
     {
         canJump = false;
         anim = GetComponent<Animator>();
+        Physics.gravity *= gravity;
 
     }
 
     void FixedUpdate()
     {
         transform.Rotate(0, x * Time.deltaTime * roatVelocity, 0);
-        transform.Translate(0, 0, y * Time.deltaTime * velocity);
+
+        // Si el jugador está retrocediendo, reduce su velocidad
+        float adjustedVelocity = (y < 0) ? velocity * 0.5f : velocity;
+
+        transform.Translate(0, 0, y * Time.deltaTime * adjustedVelocity);
     }
 
     // Update is called once per frame
@@ -39,12 +48,8 @@ public class PlayerMovement : MonoBehaviour
         anim.SetFloat("velX", x);
         anim.SetFloat("velY", y);
 
-        Debug.Log(canJump);
-
-        if (canJump)
+        if (canJump && !isJumping)
         {
-
-            Debug.Log("asds");
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -52,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
                 anim.SetBool("jump", true);
                 anim.SetBool("jumping", true);
                 rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+                isJumping = true;
+                FindObjectOfType<JumpLogic>().OnJump();
 
             }
             //anim.SetBool("inFloor", true);
@@ -76,9 +83,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void changeState()
     {
-
-        anim.SetBool("inFloor", true);
-        anim.SetBool("jumping", false);
+        if (FindObjectOfType<JumpLogic>().CanChangeState()) // Verifica si se puede cambiar de estado
+        {
+            anim.SetBool("inFloor", true);
+            anim.SetBool("jumping", false);
+            isJumping = false; // Marca que la animación de salto ha terminado
+            canJump = true;
+        }
 
     }
 }
