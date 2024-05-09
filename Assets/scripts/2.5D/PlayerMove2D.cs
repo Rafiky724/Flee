@@ -7,12 +7,20 @@ public class PlayerMove2D : MonoBehaviour
     public float velocity = 5.0f;
     public float roatVelocity = 200.0f;
     private Animator anim;
+    private Vector3 gravityDeseada;
     public float x, y;
 
     public Rigidbody rb;
-    public float jumpForce = 8f;
+    public float jumpForce = 25f;
     public bool canJump;
-    public float gravity = 2;
+    public float gravity = 3;
+
+    public float respawnX;
+    public float respawnY;
+    public float respawnZ;
+    private Vector3 respawn;
+
+    public GameObject bateria;
 
     // Para controlar si la animación de salto está en curso
     public bool isJumping;
@@ -24,7 +32,10 @@ public class PlayerMove2D : MonoBehaviour
     {
         canJump = false;
         anim = GetComponent<Animator>();
-        Physics.gravity *= gravity;
+        gravityDeseada = new Vector3(0, -29, 0);
+        Physics.gravity = gravityDeseada;
+
+        respawn = new Vector3(respawnX, respawnY, respawnZ);
 
     }
 
@@ -38,6 +49,7 @@ public class PlayerMove2D : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+
         x = Input.GetAxis("Horizontal");
 
         if (x > 0 && !facingRight)
@@ -90,6 +102,26 @@ public class PlayerMove2D : MonoBehaviour
     {
         facingRight = !facingRight;
         transform.Rotate(0f, 180f, 0f);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.CompareTag("ColliderFall"))
+        {
+
+            transform.position = respawn;
+
+        }
+
+        if (other.CompareTag("Bateria"))
+        {
+            GameController.Instance.llevaPila = true;
+            Destroy(bateria);
+            GameController.Instance.ReturnToMainSceneAfterDelay();
+
+        }
+
     }
 
 }

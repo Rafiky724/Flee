@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Portal1
+  - Portal2
+  - Portal3
+  - Portal4
+  - ColliderFall
+  - Bateria
+  - ZonaCarro
+  - Robot
   layers:
   - Default
   - TransparentFX

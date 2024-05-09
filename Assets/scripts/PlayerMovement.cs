@@ -16,6 +16,15 @@ public class PlayerMovement : MonoBehaviour
 
     public float gravity = 2;
 
+    private Vector3 spawn;
+
+    //Portales
+    public GameObject portal1;
+    public GameObject portal2;
+    public GameObject portal3;
+    public GameObject portal4;
+
+    private bool inZone = false;
 
     //NEW
     public bool isJumping;
@@ -26,6 +35,56 @@ public class PlayerMovement : MonoBehaviour
         canJump = false;
         anim = GetComponent<Animator>();
         Physics.gravity *= gravity;
+
+        if (GameController.Instance.portal1Complete)
+        {
+            Destroy(portal1);
+        }
+        if (GameController.Instance.portal2Complete)
+        {
+            Destroy(portal2);
+        }
+        if (GameController.Instance.portal3Complete)
+        {
+            Destroy(portal3);
+        }
+        if (GameController.Instance.portal4Complete)
+        {
+            Destroy(portal4);
+        }
+
+        if (GameController.Instance.portalActual == "Portal1")
+        {
+
+            spawn = new Vector3(-156.6f, 0.12f, 59f);
+
+        }
+        if (GameController.Instance.portalActual == "Portal2")
+        {
+
+            spawn = new Vector3(70.6f, 0.12f, 75.5f);
+
+        }
+        if (GameController.Instance.portalActual == "Portal3")
+        {
+
+            spawn = new Vector3(-6.5f, 0.12f, -131f);
+
+        }
+        if (GameController.Instance.portalActual == "Portal4")
+        {
+
+            spawn = new Vector3(-25.5f, 0.12f, 106f);
+
+        }
+        if (GameController.Instance.portalActual == "Inicio")
+        {
+
+            spawn = new Vector3(153f, 0.12f, -30f);
+
+        }
+
+        transform.position = spawn;
 
     }
 
@@ -42,6 +101,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         x = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
 
@@ -71,6 +131,19 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
+        if (inZone)
+        {
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+
+                GameController.Instance.llevaPila = false;
+                GameController.Instance.pilasPuestas += 1;
+
+            }
+
+        }
+
     }
 
     public void isFalling()
@@ -92,4 +165,37 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if ((other.CompareTag("Portal1") || other.CompareTag("Portal2") || other.CompareTag("Portal3") || other.CompareTag("Portal4")) && !GameController.Instance.llevaPila)
+        {
+            GameController.Instance.portalActual = other.tag;
+            GameController.Instance.LoadScene(other.tag);
+
+        }
+
+        if (other.CompareTag("ZonaCarro"))
+        {
+
+            inZone = true;
+
+        }
+
+        if (other.CompareTag("Robot"))
+        {
+
+            anim.SetBool("death", true);
+
+        }
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        
+        inZone = false;
+
+    }
+
 }
