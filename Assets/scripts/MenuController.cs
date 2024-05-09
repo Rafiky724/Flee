@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
@@ -19,21 +20,21 @@ public class MenuController : MonoBehaviour
     public void Iniciar()
     {
 
-        Debug.Log("Iniciar");
+        SceneManager.LoadScene("Tutorial");
 
     }
 
     public void Creditos()
     {
 
-        Debug.Log("Créditos");
+        SceneManager.LoadScene("Creditos");
 
     }
 
     public void Salir()
     {
 
-        Debug.Log("Salir");
+        Application.Quit();
 
     }
 

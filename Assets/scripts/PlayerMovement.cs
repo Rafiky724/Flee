@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -131,16 +132,18 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        if (inZone)
+        if (inZone && Input.GetKeyDown(KeyCode.F) && GameController.Instance.llevaPila)
         {
 
-            if (Input.GetKeyDown(KeyCode.F))
-            {
+            GameController.Instance.llevaPila = false;
+            GameController.Instance.pilasPuestas += 1;
 
-                GameController.Instance.llevaPila = false;
-                GameController.Instance.pilasPuestas += 1;
+        }
 
-            }
+        if (GameController.Instance.pilasPuestas == 4)
+        {
+
+            SceneManager.LoadScene("Creditos");
 
         }
 
@@ -186,15 +189,28 @@ public class PlayerMovement : MonoBehaviour
         {
 
             anim.SetBool("death", true);
+            Invoke("Restart", 4f);
 
         }
 
     }
 
+    public void Restart()
+    {
+
+        SceneManager.LoadScene("inGame");
+
+    }
+
     private void OnTriggerExit(Collider other)
     {
-        
-        inZone = false;
+
+        if (other.CompareTag("ZonaCarro"))
+        {
+
+            inZone = false;
+
+        }
 
     }
 

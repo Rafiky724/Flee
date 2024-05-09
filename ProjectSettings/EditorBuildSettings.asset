@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 48827e2f490c0d74192ee98882ab7232
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 30970d91fa0b1d84e9cc42f436c073b5
+  - enabled: 1
     path: Assets/Scenes/InGame.unity
     guid: 4180155909d6ec6499d8989a7b8c7d94
   - enabled: 1
@@ -20,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Minigame4.unity
     guid: 6bdb76f7eb49c064dbae45d297e2bc68
+  - enabled: 1
+    path: Assets/Scenes/Creditos.unity
+    guid: 0b765eae9919e7e4ea77c7ab64b43795
   m_configObjects: {}

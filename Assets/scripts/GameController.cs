@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour
     public bool llevaPila = false;
     public int pilasPuestas = 0;
 
-    public int nivel = 0;
+    public int nivel = 2;
 
     private void Awake()
     {
