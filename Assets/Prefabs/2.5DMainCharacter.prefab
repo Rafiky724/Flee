@@ -98,9 +98,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8928691152423745400, guid: 88e80908f3451fb43a71fda1883b1731, type: 3}
       propertyPath: m_Name
-      value: MainCharacter Variant
+      value: 2.5DMainCharacter
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5145038154798519697, guid: 88e80908f3451fb43a71fda1883b1731, type: 3}
+    - {fileID: 6072646777822495530, guid: 88e80908f3451fb43a71fda1883b1731, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
